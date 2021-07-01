@@ -10,3 +10,20 @@ test_fail_multiple_whitespace_after_comma:
 test_fail_no_whitespace_after_comma:
   fail_str: SELECT 1,4
   fix_str: SELECT 1, 4
+
+# https://github.com/sqlfluff/sqlfluff/issues/1120
+test_fail_no_whitespace_after_comma_then_function:
+  fail_str: |
+    select
+        a,sum(b)
+    from table
+
+  fix_str: |
+    SELECT
+        a, SUM(b)
+    FROM table
+  
+  configs:
+    rules:
+       L030:
+        capitalisation_policy: upper
